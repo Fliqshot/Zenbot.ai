@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZENBOT| AI Mental Health Companion</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Add these styles to your existing CSS or style.css file */
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      position: relative;
+      border-radius: 50%;
+    
+    }
+  
+    
+    .video-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+      background: transparent;
+    }
+    
+    #bg-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: cover;
+      background: #000; /* Fallback color */
+    }
+    
+    .app-container {
+      background-color: rgba(53, 52, 52, 0.85); /* Semi-transparent white background */
+      min-height: 100vh;
+      border-radius: 2rem;
+    
+      box-shadow: 2px gold solid;
+    }
+    
+    /* Dark mode adjustments */
+    .dark-mode .app-container {
+      background-color: rgba(16, 15, 15, 0.85); /* Semi-transparent black background */
+    }
+    
+    @media (max-width: 768px) {
+      .video-background {
+        display: none;
+      }
+      body {
+        background: url('mobile-bg.jpg') center/cover no-repeat fixed;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="con">
+  <!-- Video Background -->
+  <div class="video-background">
+    <video autoplay muted loop playsinline id="bg-video">
+      <source src="vid2.mp4" type="video/mp4">
+      <source src="assets/background-video.webm" type="video/webm">
+      Your browser does not support HTML5 video.
+    </video>
+  </div>
+
+  <!-- Loading Screen -->
+  <div class="loading-screen">
+    <div class="spinner"></div>
+    <h2>ZENBOT</h2>
+    <p>Your mental health companion</p>
+  </div>
+
+  <li><a href="logo.html">login</a></li>
+  
+  <!-- Main App Container -->
+  <div class="app-container hidden">
+    <!-- Rest of your existing code remains exactly the same -->
+    <!-- Header -->
+    <header>
+      <h1><i class="fas fa-brain"></i> ZENBOT</h1>
+      <div class="header-actions">
+        <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+        <div class="user-avatar">
+          <img src="images.png" alt="User">
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+      <button class="nav-btn active" data-page="chat"><i class="fas fa-comment-dots"></i></button>
+      <button class="nav-btn" data-page="mood"><i class="fas fa-smile"></i></button>
+      <button class="nav-btn" data-page="journal"><i class="fas fa-book"></i></button>
+      <button class="nav-btn" data-page="therapist"><i class="fas fa-user-md"></i></button>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+      <!-- Chat Page -->
+      <div class="page active" id="chat-page">
+        <div class="chat-container">
+          <div class="chat-messages" id="chat-messages">
+            <!-- Messages appear here -->
+          </div>
+          <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Type your message...">
+            <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mood Tracker Page -->
+      <div class="page" id="mood-page">
+        <h2>How are you feeling today?</h2>
+        <div class="mood-options">
+          <div class="mood-option" data-mood="awful">😞<span>Awful</span></div>
+          <div class="mood-option" data-mood="meh">😐<span>Meh</span></div>
+          <div class="mood-option" data-mood="ok">🙂<span>Okay</span></div>
+          <div class="mood-option" data-mood="good">😊<span>Good</span></div>
+          <div class="mood-option" data-mood="great">😁<span>Great</span></div>
+        </div>
+        <div class="mood-history">
+          <h3>Your Mood History</h3>
+          <div class="mood-chart" id="mood-chart">
+            <!-- Chart appears here -->
+          </div>
+        </div>
+      </div>
+       <!-- Video Background -->
+  <div class="video-background">
+    <video autoplay muted loop playsinline id="bg-video">
+      <source src="vid.mp4" type="video/mp4">
+      <source src="vid.mp4" type="video/webm">
+      Your browser does not support HTML5 video.
+    </video>
+  </div>
+
+      <!-- Journal Page -->
+      <div class="page" id="journal-page">
+        <h2>Today's Journal</h2>
+        <div class="journal-prompt">
+          <p>What's on your mind today?</p>
+        </div>
+        <textarea id="journal-entry" placeholder="Write your thoughts here..."></textarea>
+        <button id="save-journal">Save Entry</button>
+        <div class="past-entries">
+          <h3>Previous Entries</h3>
+          <div id="journal-entries">
+            <!-- Entries appear here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Therapist Connect Page -->
+      <div class="page" id="therapist-page">
+        <h2>Connect with a Therapist</h2>
+        <div class="therapist-cards">
+          <!-- Therapist cards appear here -->
+        </div>
+        <div class="emergency-contact">
+          <h3>Need immediate help?</h3>
+          <button id="emergency-btn"><i class="fas fa-phone-alt"></i> Call Emergency</button>
+        </div>
+      </div>
+    </main>
+  </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

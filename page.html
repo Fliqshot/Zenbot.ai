@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZENBOT | AI Mental Health Companion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      color: #343541;
+      line-height: 1.6;
+      position: relative;
+      overflow-x: hidden;
+      background: transparent;
+    }
+
+    /* Video Background */
+    .video-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    #bg-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: cover;
+      background-color: #000;
+    }
+
+    /* Main Container */
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+      background-color: rgba(255, 255, 255, 0.85);
+    }
+    a button {
+  background: linear-gradient(45deg, #6a82fb, #fc5c7d);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+a button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(106, 130, 251, 0.4);
+}
+
+    .dark-mode .container {
+      background-color: rgba(0, 0, 0, 0.85);
+      color: #ececf1;
+    }
+
+    /* Content Box */
+    .content-box {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 800px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(5px);
+    }
+
+    .dark-mode .content-box {
+      background-color: rgba(0, 0, 0, 0.9);
+      color: #060606;
+    }
+
+    /* Header */
+    .header {
+      margin-bottom: 30px;
+    }
+
+    .logo {
+      font-size: 48px;
+      margin-bottom: 15px;
+      color: #10a37f;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 15px;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: #565869;
+      margin-bottom: 30px;
+    }
+
+    .dark-mode .subtitle {
+      color: #acacbe;
+    }
+
+    /* Try Button */
+    .try-btn {
+      display: inline-block;
+      padding: 15px 30px;
+      background-color: #10a37f;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      margin-bottom: 40px;
+    }
+
+    .try-btn:hover {
+      background-color: #0d8e6f;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(16, 163, 127, 0.3);
+    }
+     /* Loading Screen */
+     .loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #000000 0%, #0f4436 100%);
+    display: flex
+;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+  
+  
+  .loading-screen h2 {
+    color: white;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .loading-screen p {
+    /* color: rgba(255,255,255,0.8); */
+  }
+  
+  .spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 3s linear infinite;
+  margin-bottom: 2rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+    .try-btn i {
+      margin-left: 8px;
+    }
+
+    /* Description */
+    .description {
+      font-size: 16px;
+      margin-bottom: 40px;
+      line-height: 1.8;
+      text-align: left;
+    }
+
+    /* Features Grid */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin: 40px 0;
+    }
+
+    .feature {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 25px;
+      border-radius: 15px;
+      transition: transform 0.3s;
+    }
+
+    .dark-mode .feature {
+      background-color: rgba(64, 65, 79, 0.8);
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature-icon {
+      font-size: 36px;
+      color: #0f97ff;
+      margin-bottom: 15px;
+    }
+
+    .feature h3 {
+      margin-bottom: 10px;
+    }
+
+    .feature p {
+      font-size: 14px;
+      color: #0f97ff;
+    }
+
+    .dark-mode .feature p {
+      color: #0f97ff;
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: #565869;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 100;
+    }
+    button {
+  background-color: #4CAF50;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+    .dark-mode .theme-toggle {
+      color: #acacbe;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .content-box {
+        padding: 30px 20px;
+      }
+
+      .logo {
+        font-size: 36px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .subtitle {
+        font-size: 16px;
+      }
+
+      .try-btn {
+        padding: 12px 25px;
+        font-size: 16px;
+      }
+
+      .video-background {
+        display: none;
+      }
+      
+
+      body {
+        background: url('mobile-bg.jpg') center/cover no-repeat fixed;
+      }
+    }
+  </style>
+</head>
+<body>
+    <div class="loading-screen">
+        <div class="spinner"></div>
+        <h2>ZENBOT</h2>
+        <p>Your mental health companion</p>
+      </div>
+      <a href="index.html">
+        <button>Try ZENBOT</button>
+      </a>
+      
+  <!-- Video Background -->
+  <div class="video-background">
+    <video autoplay muted loop playsinline id="bg-video">
+      <source src="vid.mp4" type="video/mp4">
+      <source src="vid.mp4" type="video/webm">
+      Your browser does not support HTML5 video.
+    </video>
+  </div>
+
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="theme-toggle">
+    <i class="fas fa-moon"></i>
+  </button>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="content-box">
+      <div class="header">
+        <div class="logo">
+          <i class="fas fa-brain"></i>
+        </div>
+        <h1>Welcome to ZENBOT</h1>
+        <p class="subtitle">Your AI-powered mental health companion</p>
+        
+        <!-- Try Button moved here -->
+       
+        <a href="index.html">
+            <button>Try ZENBOT</button>
+          </a>
+          
+
+
+      </div>
+
+      
+
+      <div class="description">
+        <p>ZENBOT is an innovative AI companion designed to support your mental health journey. Using advanced conversational AI, ZENBOT provides a safe space to express your thoughts, track your mood, and develop healthy coping strategies.</p>
+        <br>
+        <p>Whether you're dealing with stress, anxiety, or just need someone to talk to, ZENBOT is available 24/7 to listen without judgment and offer compassionate support tailored to your needs.</p>
+      </div>
+
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fas fa-comment-dots"></i>
+          </div>
+          <h3>Conversational Support</h3>
+          <p>Engage in meaningful conversations with an AI that understands and responds to your emotional needs.</p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3>Mood Tracking</h3>
+          <p>Monitor your emotional patterns over time with our intuitive mood tracking system.</p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fas fa-book"></i>
+          </div>
+          <h3>Journaling</h3>
+          <p>Express your thoughts privately and reflect on your personal growth journey.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    
+    themeToggle.addEventListener('click', function() {
+      document.body.classList.toggle('dark-mode');
+      themeToggle.innerHTML = document.body.classList.contains('dark-mode') ? 
+        '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>
